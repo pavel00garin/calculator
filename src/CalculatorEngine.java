@@ -3,18 +3,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-
 public class CalculatorEngine implements ActionListener {
     Calculator parent;
     char selectedAction = ' ';
     double currentResult = 0;
+
     CalculatorEngine(Calculator parent) {
         this.parent = parent;
     }
 
-    public void actionPerformed (ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
 
-        JButton clickedButton = (JButton)e.getSource();
+        JButton clickedButton = (JButton) e.getSource();
         String dispFieldText = parent.displayField.getText();
         String clickedButtonLabel = clickedButton.getText();
         parent.displayField.setText(dispFieldText + clickedButtonLabel);
@@ -54,25 +54,27 @@ public class CalculatorEngine implements ActionListener {
                 parent.displayField.setText("" + currentResult);
 
             } else if (selectedAction == '/') {
-                currentResult /= displayValue;
-                parent.displayField.setText("" + currentResult);
-
-                if (displayValue == 0) {
-                    JOptionPane.showConfirmDialog(null,"Cannot divide by zero, are you idiot?");
+                if (displayValue != 0) {
+                    currentResult /= displayValue;
+                    parent.displayField.setText("" + currentResult);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cannot divide by zero. Please enter a non-zero divisor.");
                 }
-
-            } else if (selectedAction == '*') {
-                currentResult *= displayValue;
-                parent.displayField.setText("" + currentResult);
-
-
-            } else {
-                parent.displayField.setText(dispFieldText + clickedButtonLabel);
-
             }
+
+
+        } else if (selectedAction == '*') {
+            currentResult *= displayValue;
+            parent.displayField.setText("" + currentResult);
+
+
+        } else {
+            parent.displayField.setText(dispFieldText + clickedButtonLabel);
 
         }
 
     }
 
 }
+
+
